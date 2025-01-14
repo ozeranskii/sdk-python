@@ -160,9 +160,11 @@ async def test_replayer_workflow_nondeterministic(client: Client) -> None:
 
 
 async def test_replayer_workflow_nondeterministic_json() -> None:
-    with Path(__file__).with_name("test_replayer_nondeterministic_history.json").open(
-        "r"
-    ) as f:
+    with (
+        Path(__file__)
+        .with_name("test_replayer_nondeterministic_history.json")
+        .open("r") as f
+    ):
         history_json = f.read()
     with pytest.raises(workflow.NondeterminismError):
         await Replayer(workflows=[SayHelloWorkflow]).replay_workflow(
@@ -173,9 +175,11 @@ async def test_replayer_workflow_nondeterministic_json() -> None:
 async def test_replayer_multiple_histories_fail_fast() -> None:
     with Path(__file__).with_name("test_replayer_complete_history.json").open("r") as f:
         history_json = f.read()
-    with Path(__file__).with_name("test_replayer_nondeterministic_history.json").open(
-        "r"
-    ) as f:
+    with (
+        Path(__file__)
+        .with_name("test_replayer_nondeterministic_history.json")
+        .open("r") as f
+    ):
         history_json_bad = f.read()
 
     callcount = 0
@@ -199,9 +203,11 @@ async def test_replayer_multiple_histories_fail_fast() -> None:
 async def test_replayer_multiple_histories_fail_slow() -> None:
     with Path(__file__).with_name("test_replayer_complete_history.json").open("r") as f:
         history_json = f.read()
-    with Path(__file__).with_name("test_replayer_nondeterministic_history.json").open(
-        "r"
-    ) as f:
+    with (
+        Path(__file__)
+        .with_name("test_replayer_nondeterministic_history.json")
+        .open("r") as f
+    ):
         history_json_bad = f.read()
 
     callcount = 0
@@ -378,9 +384,11 @@ async def test_replayer_command_reordering_backward_compatibility() -> None:
     to [UpdateAccepted, CompleteWorkflowExecution], and events 5 and 6 can be applied to the
     corresponding state machines.
     """
-    with Path(__file__).with_name(
-        "test_replayer_command_reordering_backward_compatibility.json"
-    ).open() as f:
+    with (
+        Path(__file__)
+        .with_name("test_replayer_command_reordering_backward_compatibility.json")
+        .open() as f
+    ):
         history = f.read()
     await Replayer(workflows=[UpdateCompletionAfterWorkflowReturn]).replay_workflow(
         WorkflowHistory.from_json("fake", history)
